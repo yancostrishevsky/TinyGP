@@ -32,7 +32,7 @@ public class tiny_gp {
     static double avg_len;
     static final int
             MAX_LEN = 10000,
-            POPSIZE = 100000,
+            POPSIZE = 250000,
             DEPTH = 5,
             GENERATIONS = 50,
             TSIZE = 2;
@@ -377,7 +377,7 @@ public class tiny_gp {
         print_parms();
         stats(fitness, pop, 0, csv);
         for (gen = 1; gen < GENERATIONS; gen++) {
-            if (fbestpop > -1e-5) {
+            if (fbestpop > -1e-2) {
                 System.out.print("PROBLEM SOLVED\n");
                 System.exit(0);
             }
@@ -404,7 +404,7 @@ public class tiny_gp {
 
     public static void main(String[] args) {
         long start = System.nanoTime();
-        String file = "f1_0";
+        String file = "f6_0";
         String fname = file + ".dat";
         long s = -1;
         String filename = file + ".csv";

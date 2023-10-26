@@ -12,7 +12,7 @@ public class Generate {
     static double[][] f2_domain = {{-Math.PI, Math.PI}, {0, 7}, {0, 100}, {-100, 100}};
     static int[][] f3_domain = {{0, 4}, {0, 9}, {0, 99}, {0, 999}};
     static int[][] f4_domain = {{0, 1}, {-10, 10}, {0, 100}, {-1000, 1000}};
-    static double[][] f5_domain = {{-3.14, 3.14}, {0, 7}, {0, 100}, {-100, 100}
+    static float[][] f5_domain = {{(float) -3.14, (float)3.14}, {0, 7}, {0, 100}, {-100, 100}
     };
     static int[][] f6_domain = {{-10, 10}, {0, 100}, {-1, 1}, {-1000, 1000}};
 
@@ -125,6 +125,71 @@ public class Generate {
 
 
     }
+    public static void generate_f4() throws IOException {
+        Locale.setDefault(Locale.US);
+
+        for (int i = 0; i < f4_domain.length; ++i) {
+            double min = 0;
+            double max = 0;
+            ArrayList<double[]> values = new ArrayList<>();
+            String filename = "f4_".concat(String.valueOf(i)).concat(".dat");
+            double step = (Math.abs(f4_domain[i][0]) + Math.abs(f4_domain[i][1])) / elements;
+
+            for (double j = f4_domain[i][0]; j < f4_domain[i][1]; j += step) {
+                double value = f4(j, j);
+
+                double[] temp = new double[]{j, value};
+                values.add(temp);
+                if (value > max) max = value;
+                if (value < min) min = value;
+            }
+            ToFile2(filename, values, min, max);
+        }
+    }
+
+    public static void generate_f5() throws IOException {
+        Locale.setDefault(Locale.US);
+
+        for (int i = 0; i < f5_domain.length; ++i) {
+            double min = 0;
+            double max = 0;
+            ArrayList<double[]> values = new ArrayList<>();
+            String filename = "f5_".concat(String.valueOf(i)).concat(".dat");
+            double step = (Math.abs(f5_domain[i][0]) + Math.abs(f5_domain[i][1])) / elements;
+
+            for (float j = f5_domain[i][0]; j < f5_domain[i][1]; j += step) {
+                double value = f5(j, j);
+
+                double[] temp = new double[]{j, value};
+                values.add(temp);
+                if (value > max) max = value;
+                if (value < min) min = value;
+            }
+            ToFile2(filename, values, min, max);
+        }
+    }
+
+    public static void generate_f6() throws IOException {
+        Locale.setDefault(Locale.US);
+
+        for (int i = 0; i < f6_domain.length; ++i) {
+            double min = 0;
+            double max = 0;
+            ArrayList<double[]> values = new ArrayList<>();
+            String filename = "f6_".concat(String.valueOf(i)).concat(".dat");
+            double step = (Math.abs(f6_domain[i][0]) + Math.abs(f6_domain[i][1])) / elements;
+
+            for (float j = f6_domain[i][0]; j < f6_domain[i][1]; j += step) {
+                double value = f6(j, j);
+
+                double[] temp = new double[]{j, value};
+                values.add(temp);
+                if (value > max) max = value;
+                if (value < min) min = value;
+            }
+            ToFile2(filename, values, min, max);
+        }
+    }
 
 
     public static void ToFile(String filename, ArrayList<double[]> values, double min, double max) throws IOException {
@@ -143,11 +208,30 @@ public class Generate {
 
     }
 
+    public static void ToFile2(String filename, ArrayList<double[]> values, double min, double max) throws IOException {
+        Files.createDirectories(Paths.get("Data"));
+        BufferedWriter output = new BufferedWriter(new FileWriter(filename));
+        output.write(String.format("2 %.0f %.0f %.0f %.0f", elements, min, max, elements).concat("\n"));
+
+        for (var line :
+                values) {
+            output.write(String.format("%.2f %.2f %.2f\n", line[0], line[0], line[1]));
+
+
+        }
+        output.close();
+
+
+    }
+
     public static void generate() {
         try {
             generate_f1();
             generate_f2();
             generate_f3();
+            generate_f4();
+            generate_f5();
+            generate_f6();
         } catch (IOException e) {
             e.printStackTrace();
         }
