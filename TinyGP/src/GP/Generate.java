@@ -16,7 +16,7 @@ public class Generate {
     };
     static int[][] f6_domain = {{-10, 10}, {0, 100}, {-1, 1}, {-1000, 1000}};
 
-    private static final float elements = 10;
+    private static final float elements = 100;
 
 
     private static double f1(float x) {
